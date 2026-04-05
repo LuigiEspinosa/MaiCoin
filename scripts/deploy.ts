@@ -5,7 +5,7 @@ async function main() {
   const { ethers } = await network.connect();
   const [deployer] = await ethers.getSigners();
 
-  console.log("Dep loying with:", deployer.address);
+  console.log("Deploying with:", deployer.address);
 
   // getContractFactory looks up the compiled artifact by contract name.
   // Constructor arg: initialOwner - sets the owner for onlyOwner functions.
