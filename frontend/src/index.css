@@ -1,2 +1,10 @@
+/* ───────────────────────────────────────────────────────
+   Fonts
+   Cinzel Decorative — display only (logo, h1, section
+   headings). Never use for body copy, addresses, or
+   numbers — it breaks scannability at small sizes.
+   ─────────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap");
+
 @import "tailwindcss";
 @import "./tokens.css";

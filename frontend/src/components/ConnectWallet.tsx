@@ -35,7 +35,7 @@ export function ConnectWallet({ address, onConnect, onSwitchNetwork }: Props) {
     <button
       onClick={onConnect}
       className="px-4 py-2 rounded text-white font-semibold text-sm"
-      style={{ backgroundColor: "var(--color-mai-purple)" }}
+      style={{ backgroundColor: "var(--color-mai-leaf)" }}
     >
       Connect Wallet
     </button>

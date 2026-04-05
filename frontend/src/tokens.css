@@ -1,69 +1,102 @@
+/* ═══════════════════════════════════════════════════════
+   tokens.css — MaiCoin Design Tokens
+   Theme: Leafy Green Garden (dark)
+   Phase 4 deliverable. No component styles here.
+
+   Rule: every token must encode a MaiCoin-specific
+   semantic. If Tailwind already covers it (colors,
+   spacing, radii), do not duplicate it here.
+═══════════════════════════════════════════════════════ */
+
+/* ───────────────────────────────────────────────────────
+   Tailwind v4 theme extension
+   These become Tailwind utility classes automatically:
+     bg-mai-gold, text-mai-leaf, bg-tx-confirmed,
+     bg-surface-owner, text-wallet-on, etc.
+   ─────────────────────────────────────────────────────── */
 @theme {
-  /* — Brand
-      Gold  = primary brand, CTAs, active states.
-      Purple = secondary brand, links, accents. */
-  --color-mai-gold: #f59e0b;
-  --color-mai-gold-muted: #fcd34d; /* hover, highlight rings */
-  --color-mai-purple: #7c3aed;
-  --color-mai-purple-muted: #a78bfa; /* soft backgrounds, chips */
+  /* — Typography ————————————————————————————————————————
+     Two-font system: metal display + readable body.
+     Never set body copy in Cinzel Decorative.           */
+  --font-display: "Cinzel Decorative", serif;
+  --font-body: "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
 
-  /* — Transaction lifecycle
-      Mirrors the three possible states of any tx.wait()  */
-  --color-tx-pending: #f59e0b; /* same hue as brand gold — in-flight */
-  --color-tx-confirmed: #10b981; /* mined, receipt received             */
-  --color-tx-failed: #ef4444; /* reverted or user-rejected           */
+  /* — Brand ——————————————————————————————————————————————
+     Gold  = primary brand, coin identity, CTAs.
+     Leaf  = secondary brand, success states, accents.
+     Purple is retired — replaced by leaf green.        */
+  --color-mai-gold: #c9a844; /* warm coin gold on dark bg    */
+  --color-mai-gold-muted: #e8c96a; /* hover rings, highlight       */
+  --color-mai-leaf: #52b788; /* forest green, not neon       */
+  --color-mai-leaf-muted: #3a8a64; /* pressed, active states       */
 
-  /* — Wallet connection state
-      Drives the status dot in the header. */
-  --color-wallet-on: #10b981;
-  --color-wallet-off: #9ca3af;
+  /* — Transaction lifecycle ——————————————————————————————
+     Mirrors the three possible states of any tx.wait() */
+  --color-tx-pending: #c9a844; /* gold = brand = in-flight      */
+  --color-tx-confirmed: #52b788; /* leaf green = mined            */
+  --color-tx-failed: #d95f4b; /* dark red, not eye-searing     */
 
-  /* — Surfaces
-      surface-owner is the only non-white card surface
-      a warm tint that flags the owner-only MintTokens
-      card without relying on the dashed border alone. */
-  --color-surface-page: #f5f5f5;
-  --color-surface-card: #ffffff;
-  --color-surface-owner: #fffbeb;
+  /* — Wallet connection state ————————————————————————————
+     Drives the status dot in the header.               */
+  --color-wallet-on: #52b788;
+  --color-wallet-off: #3e5040;
+
+  /* — Surfaces ———————————————————————————————————————————
+     Layered dark greens. Each step is ~8% lighter.
+     surface-owner stays amber-tinted to flag privilege
+     without relying on the border alone.               */
+  --color-surface-page: #080e08; /* near-black with green cast    */
+  --color-surface-card: #0d160d; /* card resting state            */
+  --color-surface-owner: #15100a; /* amber-dark for MintTokens     */
 }
 
+/* ───────────────────────────────────────────────────────
+   Domain-specific tokens
+   No Tailwind utility equivalent exists for these.
+   Consumed via var() in component CSS or inline styles.
+   ─────────────────────────────────────────────────────── */
 :root {
-  /* — Address and hash display
+  /* — Address and hash display ——————————————————————————
      Every Ethereum address and tx hash in the UI uses
      these tokens. Never render addresses in the body
      font — they must be monospace to be scannable.     */
   --font-address: ui-monospace, "Courier New", monospace;
-  --color-address-text: #374151;
-  --color-address-bg: #f3f4f6;
-  --color-tx-hash-link: #7c3aed; /* purple — clickable, opens Etherscan */
-  --color-tx-hash-hover: #5b21b6;
+  --color-address-text: #8fa68f; /* muted leafy — readable, quiet */
+  --color-address-bg: #0d160d; /* matches card surface          */
+  --color-tx-hash-link: #c9a844; /* gold — clickable, Etherscan   */
+  --color-tx-hash-hover: #e8c96a;
 
-  /* — Balance display
+  /* — Balance display ————————————————————————————————————
      The large MAI number in the Balance card.
      Symbol ('MAI') is dimmer than the numeric value.  */
   --font-size-balance: 2rem;
   --font-weight-balance: 700;
-  --color-balance-symbol: #6b7280;
+  --color-balance-symbol: #526052; /* dim green — subordinate       */
 
-  /* — Network badge (Sepolia)
-     Scoped to Sepolia. If the project ever adds other
-     networks, add --color-network-mainnet etc. here.  */
-  --color-network-bg: #eff6ff;
-  --color-network-text: #1d4ed8;
-  --color-network-border: #bfdbfe;
+  /* — Network badge (Sepolia) ————————————————————————————
+     Blue for testnet — intentionally distinct from the
+     green brand to signal "not mainnet."               */
+  --color-network-bg: #0a1524;
+  --color-network-text: #60a5fa;
+  --color-network-border: #1e3a5a;
 
-  /* — Owner-only card and badge 
+  /* — Owner-only card and badge ——————————————————————————
      Applied to the MintTokens card and its badge.
-     Uses amber tones (warm) to signal privilege,
-     distinct from the error red palette.              */
-  --color-owner-border: rgba(245, 158, 11, 0.3);
-  --color-owner-badge-bg: #fff7ed;
-  --color-owner-badge-text: #92400e;
+     Gold glow border + dark amber fill signals privilege
+     without using error red (which implies danger).   */
+  --color-owner-border: rgba(201, 168, 68, 0.25);
+  --color-owner-badge-bg: #2a1a05;
+  --color-owner-badge-text: #e8c96a; /* bright gold on dark amber    */
 
-  /* — Card and input borders
-     Kept here rather than using Tailwind's border-* to
-     ensure consistent border weight across the dApp
-     regardless of Tailwind version changes.           */
-  --color-border-card: #e5e7eb;
-  --color-border-input: #d1d5db;
+  /* — Card and input borders —————————————————————————————
+     Dark green borders — visible but not competing with
+     the content.                                       */
+  --color-border-card: #1a2a1a;
+  --color-border-input: #243824;
+
+  /* — Body text scale ————————————————————————————————————
+     Three levels of text hierarchy on dark backgrounds. */
+  --color-text-primary: #e4ede4; /* off-white, green-tinted       */
+  --color-text-secondary: #8fa68f; /* muted mid-tone                */
+  --color-text-muted: #526052; /* placeholder, disabled         */
 }
