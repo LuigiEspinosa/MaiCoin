@@ -1,6 +1,7 @@
 // Upate CONTRACT_ADRESS after every local or Sepolia deploy.
 // The Hardhat local network resets on restart - redeploy and update this value each time.
-export const CONTRACT_ADRESS = "0x..." as const;
+export const CONTRACT_ADRESS =
+  "0x5FbDB2315678afecb367f032d93F642f64180aa3" as const;
 
 // Human-readable ABI - only functions and events the frontend actually calls.
 // The complete ABI is in artifacts/contracts/MaiCoin.sol/MaiCoin.json after compile.

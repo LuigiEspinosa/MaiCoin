@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "compile": "npx hardhat compile",
-    "test": "npx hardhat test --network hardhatMainnet"
+    "test": "npx hardhat test --network hardhatMainnet",
+    "deploy:local": "npx hardhat run scripts/deploy.ts --network hardhatMainnet",
+    "console": "npx hardhat console --network hardhatMainnet"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^4.0.7",
