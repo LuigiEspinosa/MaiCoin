@@ -1,0 +1,69 @@
+@theme {
+  /* — Brand
+      Gold  = primary brand, CTAs, active states.
+      Purple = secondary brand, links, accents. */
+  --color-mai-gold: #f59e0b;
+  --color-mai-gold-muted: #fcd34d; /* hover, highlight rings */
+  --color-mai-purple: #7c3aed;
+  --color-mai-purple-muted: #a78bfa; /* soft backgrounds, chips */
+
+  /* — Transaction lifecycle
+      Mirrors the three possible states of any tx.wait()  */
+  --color-tx-pending: #f59e0b; /* same hue as brand gold — in-flight */
+  --color-tx-confirmed: #10b981; /* mined, receipt received             */
+  --color-tx-failed: #ef4444; /* reverted or user-rejected           */
+
+  /* — Wallet connection state
+      Drives the status dot in the header. */
+  --color-wallet-on: #10b981;
+  --color-wallet-off: #9ca3af;
+
+  /* — Surfaces
+      surface-owner is the only non-white card surface
+      a warm tint that flags the owner-only MintTokens
+      card without relying on the dashed border alone. */
+  --color-surface-page: #f5f5f5;
+  --color-surface-card: #ffffff;
+  --color-surface-owner: #fffbeb;
+}
+
+:root {
+  /* — Address and hash display
+     Every Ethereum address and tx hash in the UI uses
+     these tokens. Never render addresses in the body
+     font — they must be monospace to be scannable.     */
+  --font-address: ui-monospace, "Courier New", monospace;
+  --color-address-text: #374151;
+  --color-address-bg: #f3f4f6;
+  --color-tx-hash-link: #7c3aed; /* purple — clickable, opens Etherscan */
+  --color-tx-hash-hover: #5b21b6;
+
+  /* — Balance display
+     The large MAI number in the Balance card.
+     Symbol ('MAI') is dimmer than the numeric value.  */
+  --font-size-balance: 2rem;
+  --font-weight-balance: 700;
+  --color-balance-symbol: #6b7280;
+
+  /* — Network badge (Sepolia)
+     Scoped to Sepolia. If the project ever adds other
+     networks, add --color-network-mainnet etc. here.  */
+  --color-network-bg: #eff6ff;
+  --color-network-text: #1d4ed8;
+  --color-network-border: #bfdbfe;
+
+  /* — Owner-only card and badge 
+     Applied to the MintTokens card and its badge.
+     Uses amber tones (warm) to signal privilege,
+     distinct from the error red palette.              */
+  --color-owner-border: rgba(245, 158, 11, 0.3);
+  --color-owner-badge-bg: #fff7ed;
+  --color-owner-badge-text: #92400e;
+
+  /* — Card and input borders
+     Kept here rather than using Tailwind's border-* to
+     ensure consistent border weight across the dApp
+     regardless of Tailwind version changes.           */
+  --color-border-card: #e5e7eb;
+  --color-border-input: #d1d5db;
+}
