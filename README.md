@@ -1,57 +1,123 @@
-# Sample Hardhat 3 Beta Project (`mocha` and `ethers`)
+# MaiCoin
 
-This project showcases a Hardhat 3 Beta project using `mocha` for tests and the `ethers` library for Ethereum interactions.
+A full-stack ERC-20 learning project — Solidity smart contract, Hardhat 3 testing, Sepolia testnet deployment, and a React dashboard for wallet interaction.
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+![Solidity](https://img.shields.io/badge/Solidity-0.8.28-363636?logo=solidity)
+![Hardhat](https://img.shields.io/badge/Hardhat-3.x-yellow)
+![ethers.js](https://img.shields.io/badge/ethers.js-v6-blue)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
+![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38BDF8?logo=tailwindcss)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript)
 
-## Project Overview
+---
 
-This example project includes:
+## What it does
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using `mocha` and ethers.js
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+Deploy the `MaiCoin` (MAI) token to Sepolia, send it to friends, let them burn some. Total cost: $0 — Sepolia ETH is free from a faucet.
 
-## Usage
+---
 
-### Running Tests
+## System architecture
 
-To run all the tests in the project, execute the following command:
+```mermaid
+flowchart LR
+    subgraph Browser
+        UI[React Dashboard]
+        MM[MetaMask]
+        UI -->|eth_requestAccounts| MM
+        MM -->|BrowserProvider + Signer| UI
+    end
 
-```shell
-npx hardhat test
+    subgraph Sepolia
+        Contract[MaiCoin.sol\nERC-20 + Ownable]
+    end
+
+    subgraph Hardhat
+        Local[hardhatMainnet\nedr-simulated]
+    end
+
+    MM -->|sign tx| Contract
+    UI -->|read calls| Contract
+    Contract -.->|local dev| Local
 ```
 
-You can also selectively run the Solidity or `mocha` tests:
+---
 
-```shell
-npx hardhat test solidity
-npx hardhat test mocha
+## User flow
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant App
+    participant MetaMask
+    participant Contract
+
+    User->>App: open dashboard
+    User->>App: click Connect Wallet
+    App->>MetaMask: eth_requestAccounts
+    MetaMask-->>App: address + provider
+    App->>Contract: balanceOf(address)
+    Contract-->>App: MAI balance
+    User->>App: send / mint / burn
+    App->>MetaMask: sign transaction
+    MetaMask->>Contract: execute tx
+    Contract-->>App: Transfer event
+    App->>Contract: balanceOf(address)
+    Contract-->>App: updated balance
 ```
 
-### Make a deployment to Sepolia
+---
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
+## Local setup
 
-To run the deployment to a local chain:
+**Prerequisites:** Node.js 22, pnpm, MetaMask browser extension.
 
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
+```bash
+# 1. Clone
+git clone git@github.com:LuigiEspinosa/MaiCoin.git
+cd MaiCoin
+
+# 2. Install contract dependencies
+npm install
+
+# 3. Compile the contract
+npx hardhat compile
+
+# 4. Deploy locally
+npx hardhat run scripts/deploy.ts --network hardhatMainnet
+# Copy the printed address into frontend/src/lib/contract.ts → CONTRACT_ADDRESS
+
+# 5. Install and start the frontend
+cd frontend
+pnpm install
+pnpm dev
+# Open http://localhost:5173
 ```
 
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
+---
 
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
+## Sepolia deployment
 
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
+```bash
+# 1. Copy and fill in .env
+cp .env.example .env
+# SEPOLIA_RPC_URL  — get a free key at alchemy.com
+# SEPOLIA_PRIVATE_KEY — your MetaMask private key (never commit this)
+# ETHERSCAN_API_KEY — free at etherscan.io
 
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
+# 2. Get free testnet ETH
+# https://sepoliafaucet.com
+
+# 3. Deploy
+npx hardhat run scripts/deploy.ts --build-profile production --network sepolia
+
+# 4. Set the frontend env
+echo "VITE_CONTRACT_ADDRESS=0x..." > frontend/.env
 ```
 
-After setting the variable, you can run the deployment with the Sepolia network:
+---
 
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
-```
+## License
+
+MIT

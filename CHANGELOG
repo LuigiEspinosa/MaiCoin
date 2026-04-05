@@ -1,0 +1,28 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+---
+
+## [0.1.0] — 2026-04-04
+
+### Added
+
+- `contracts/MaiCoin.sol` — ERC-20 token with mint (owner only) and burn (any holder) via OpenZeppelin 5.x
+- `scripts/deploy.ts` — Hardhat 3 deployment script using `network.connect()` + ethers.js v6
+- `.env.example` — placeholder template for `SEPOLIA_RPC_URL`, `SEPOLIA_PRIVATE_KEY`, `ETHERSCAN_API_KEY`
+- `frontend/` — Vite + React 18 + TypeScript project scaffold
+- `frontend/src/tokens.css` — Leafy Green Garden dark theme: surfaces, brand gold, leaf green, Cinzel Decorative display font
+- `frontend/src/types/index.ts` — global MetaMask provider type (`EthereumProvider` extends `Eip1193Provider`)
+- `frontend/src/lib/contract.ts` — human-readable ABI (includes `approve`, `allowance`, `burnFrom`) and `CONTRACT_ADDRESS` constant
+- `frontend/src/hooks/useWallet.ts` — MetaMask connect with ECH fixes: user rejection guard (4001), empty accounts check, Sepolia add fallback (4902), `accountsChanged`/`chainChanged` event subscriptions
+- `frontend/src/hooks/useContract.ts` — compile-ready stub; full implementation in Phase 6
+- `frontend/src/components/` — six dashboard component stubs: ConnectWallet, TokenInfo, Balance, SendTokens, MintTokens (owner badge), BurnTokens
+- `frontend/src/App.tsx` — dashboard shell wiring wallet state into all six components
+- Hardhat 3 config with `hardhatMainnet` (edr-simulated) and Sepolia (lazy `configVariable`) networks
+
+### Notes
+
+- `npx hardhat compile`, `pnpm tsc --noEmit`, and `pnpm build` all pass clean
+- `--color-mai-purple` is retired; use `--color-mai-leaf` in Phase 6 components
+- Phase 6 will complete: contract test suite, Sepolia deploy, full hook and component implementations, boneyard-js skeleton loading
